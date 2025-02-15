@@ -1,0 +1,23 @@
+[package]
+name = "galactic-markdown"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jaakko"]
+description = "A simple and focused Markdown editor built with Rust"
+
+[dependencies]
+eframe = "0.25.0"
+egui = "0.25.0"
+egui_commonmark = "0.11.0"
+rfd = "0.12"
+
+[target.'cfg(windows)'.dependencies.windows]
+version = "0.48"
+features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+]
+
+[dependencies.winapi]
+version = "0.3.9"
+features = ["winuser", "windef"] 

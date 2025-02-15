@@ -1,0 +1,77 @@
+version: '3'
+
+vars:
+  CARGO_FLAGS: ''
+  BINARY_NAME: galactic-markdown
+
+tasks:
+  default:
+    cmds:
+      - task --list-all
+    silent: true
+    desc: Lists all available tasks
+
+  check:
+    desc: Run cargo check
+    cmds:
+      - cargo check {{.CARGO_FLAGS}}
+
+  setup:
+    desc: Install development dependencies
+    cmds:
+      - cargo install cargo-watch cargo-audit
+    status:
+      - which cargo-watch
+      - which cargo-audit
+
+  build:
+    desc: Build the project
+    cmds:
+      - cargo build {{.CARGO_FLAGS}}
+
+  build-release:
+    desc: Build optimized release version
+    cmds:
+      - cargo build --release {{.CARGO_FLAGS}}
+
+  run:
+    desc: Run the project
+    cmds:
+      - cargo run {{.CARGO_FLAGS}}
+
+  run-release:
+    desc: Run the optimized release version
+    cmds:
+      - cargo run --release {{.CARGO_FLAGS}}
+
+  watch:
+    desc: Watch for changes and rebuild
+    cmds:
+      - cargo watch -x 'run {{.CARGO_FLAGS}}'
+
+  test:
+    desc: Run tests
+    cmds:
+      - cargo test {{.CARGO_FLAGS}}
+
+  lint:
+    desc: Run clippy lints
+    cmds:
+      - cargo clippy {{.CARGO_FLAGS}} -- -D warnings
+
+  audit:
+    desc: Audit dependencies for security vulnerabilities
+    cmds:
+      - cargo audit
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - cargo clean
+
+  all:
+    desc: Run all checks (lint, test, build)
+    cmds:
+      - task: lint
+      - task: test
+      - task: build 
